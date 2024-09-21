@@ -1,0 +1,41 @@
+<div class="container mt-5 d-flex justify-content-center" >
+    <div>
+        <h1>{{ editar ? 'Editar conta' :'Nova conta'}} </h1>
+        <form [formGroup]="formGroup" class="example-form mt-4" (ngSubmit)="cadastrar()">
+            <small class="text-danger mb-2" *ngIf="formGroup.get('numero')?.errors &&
+            formGroup.get('numero')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Número</mat-label>
+                <input [readonly]="editar" matInput formControlName="numero">
+            </mat-form-field>
+            <small class="text-danger mb-2" *ngIf="formGroup.get('agencia')?.errors &&
+            formGroup.get('agencia')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Agência</mat-label>
+                <input [readonly]="editar" matInput formControlName="agencia">
+            </mat-form-field>
+            <small class="text-danger mb-2" *ngIf="formGroup.get('saldo')?.errors &&
+            formGroup.get('saldo')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Saldo</mat-label>
+                <input matInput formControlName="saldo">
+            </mat-form-field>
+            <small class="text-danger mb-2" *ngIf="formGroup.get('cliente')?.errors &&
+            formGroup.get('cliente')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Cliente</mat-label>
+                <mat-select formControlName="cliente">
+                  <mat-option *ngFor="let cliente of clientes"  [value]="cliente.id">
+                    {{cliente.nome}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!--Botao de submissao do formulario-->
+            <div class="d-flex justify-content-center">
+                <button [disabled]="!formGroup.valid" type="submit" mat-raised-button color="primary">
+                    {{editar ? 'Editar' : 'Cadastrar'}}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

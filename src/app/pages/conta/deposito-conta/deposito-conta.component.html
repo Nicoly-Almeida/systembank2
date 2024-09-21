@@ -1,0 +1,39 @@
+<div class="container mt-5 d-flex justify-content-center" >
+    <div>
+        <h1>Depósito</h1>
+
+
+        <form [formGroup]="formGroup" class="example-form mt-4" (ngSubmit)="cadastrar()">
+
+
+            <!--Input de nome do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroup.get('valor')?.errors &&
+            formGroup.get('valor')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Valor</mat-label>
+                <input matInput formControlName="valor">
+            </mat-form-field>
+
+
+            <!--Input de observacoes do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroup.get('conta')?.errors &&
+            formGroup.get('conta')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Conta</mat-label>
+                <mat-select formControlName="conta">
+                  <mat-option *ngFor="let conta of contas"  [value]="conta.id">
+                    {{conta.numero}} - {{conta.agencia}} - {{conta.nomeCliente}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+            <!--Botao de submissao do formulario-->
+            <div class="d-flex justify-content-center">
+                <button [disabled]="!formGroup.valid" type="submit" mat-raised-button color="primary">
+                    Cadastrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

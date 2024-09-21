@@ -7,19 +7,25 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { ClienteModule } from './pages/cliente/cliente.module';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ContaModule } from './pages/conta/conta.module';
+import { MaterialModule } from './shared/material/material.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MaterialModule,
     NgxMaskDirective,
     NgxMaskPipe,
-    ClienteModule
+    ClienteModule,
+    ContaModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [provideNgxMask()],

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Cliente } from 'src/app/shared/models/cliente';
 import { ClienteService } from 'src/app/shared/services/cliente/cliente.service';
 import Swal from 'sweetalert2';
@@ -10,10 +10,11 @@ import Swal from 'sweetalert2';
   templateUrl: './cadastro-cliente.component.html',
   styleUrls: ['./cadastro-cliente.component.scss']
 })
-export class CadastroClienteComponent {
+export class CadastroClienteComponent implements OnInit {
+  editar: boolean;
   formGroup: FormGroup;
 
-  constructor(private clienteService: ClienteService, private router: Router){
+  constructor(private clienteService: ClienteService, private router: Router, private route: ActivatedRoute){
     this.formGroup = new FormGroup({
       id: new FormControl(null),
       nome: new FormControl('', Validators.required),
@@ -22,10 +23,45 @@ export class CadastroClienteComponent {
       observacoes: new FormControl('', Validators.required),
       ativo: new FormControl(true)
     });
+    this.editar = false
   }
 
-  cadastrar() {
-    const cliente: Cliente = this.formGroup.value;
+  ngOnInit(): void {
+    if (this.route.snapshot.params["id"]){
+      this.editar = true
+      this.clienteService.pesquisarPorId(this.route.snapshot.params["id"]).subscribe(
+        cliente => {
+          this.formGroup.patchValue(cliente)
+        }
+      )
+    }
+
+  }
+
+  editarCliente(cliente: Cliente){
+    this.clienteService.atualizar(cliente).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Sucesso',
+          text: 'Cliente atualizado com sucesso!',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        this.router.navigate(['/cliente']);
+      },
+      error: (error) => {
+        console.error(error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Erro ao atualizar cliente!',
+        });
+      }
+    });
+  }
+
+  cadastrarCliente(cliente: Cliente){
     this.clienteService.inserir(cliente).subscribe({
       next: () => {
         Swal.fire({
@@ -45,9 +81,17 @@ export class CadastroClienteComponent {
           text: 'Erro ao cadastrar cliente!',
         })
       }})
-
-      
   }
+
   
+
+  salvar() {
+    const cliente: Cliente = this.formGroup.value;
+    if (this.editar) {
+      this.editarCliente(cliente)
+    } else {
+      this.cadastrarCliente(cliente)
+    }
+  }
 }
 

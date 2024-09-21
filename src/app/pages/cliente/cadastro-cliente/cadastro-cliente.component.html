@@ -1,7 +1,7 @@
 <div class="container mt-5 d-flex justify-content-center" >
     <div>
         <h1>Novo cliente</h1>
-        <form [formGroup]="formGroup" class="example-form mt-4" (ngSubmit)="cadastrar()">
+        <form [formGroup]="formGroup" class="example-form mt-4" (ngSubmit)="salvar()">
             <!--Input de nome do cliente-->
             <small class="text-danger mb-2" *ngIf="formGroup.get('nome')?.errors &&
             formGroup.get('nome')?.hasError('required')">Campo obrigatório</small>

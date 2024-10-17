@@ -1,0 +1,59 @@
+<div class="container mt-5 d-flex justify-content-center" >
+    <div>
+        <h1>Novo cliente</h1>
+
+
+        <form [formGroup]="formGroup" class="example-form mt-4" (ngSubmit)="cadastrar()">
+	
+            <!--Input de nome do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroup.get('nome')?.errors &&
+            formGroup.get('nome')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="nome">
+            </mat-form-field>
+
+
+            <!--Input de cpf do cliente-->
+            <small class="text-danger mb-2"   *ngIf="formGroup.get('cpf')?.errors &&
+            formGroup.get('cpf')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>CPF</mat-label>
+                <input matInput formControlName="cpf" mask="000.000.000-00">
+            </mat-form-field>
+
+
+            <!--Input de email do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroup.get('email')?.errors &&
+            formGroup.get('email')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+
+
+            <!--Input de observacoes do cliente-->
+            <small class="text-danger mb-2" *ngIf="formGroup.get('observacoes')?.errors &&
+            formGroup.get('observacoes')?.hasError('required')">Campo obrigatório</small>
+            <mat-form-field class="example-full-width">
+                <mat-label>Observações</mat-label>
+                <textarea matInput formControlName="observacoes"></textarea>
+            </mat-form-field>
+
+
+            <!--Bolas de selecao de status do cliente-->
+            <mat-radio-group formControlName="ativo">
+                <mat-radio-button [value]="true">Ativo</mat-radio-button>
+                <mat-radio-button [value]="false">Inativo</mat-radio-button>
+            </mat-radio-group>
+
+
+            <!--Botao de submissao do formulario-->
+            <div class="d-flex justify-content-center">
+                <button [disabled]="!formGroup.valid" type="submit" mat-raised-button color="primary">
+                    Cadastrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

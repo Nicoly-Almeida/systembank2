@@ -1,0 +1,56 @@
+<div class="container mt-5">
+    <div class="d-flex justify-content-between">
+      <h1>Listagem de clientes</h1>
+      <button mat-raised-button color="primary" routerLink="/cliente/novo">Novo cliente</button>
+    </div>
+
+    <table mat-table class="mt-5" [dataSource]="dataSource">
+      <!-- Coluna ID -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+ 
+      <!-- Coluna Nome -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef> Nome </th>
+        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+      </ng-container>
+ 
+      <!-- Coluna CPF -->
+      <ng-container matColumnDef="cpf">
+        <th mat-header-cell *matHeaderCellDef> CPF </th>
+        <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
+      </ng-container>
+ 
+      <!-- Coluna Email -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      </ng-container>
+
+
+      <!-- Coluna Status -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element"> {{element.ativo ? 'Ativo' : 'Inativo'}} </td>
+      </ng-container>
+
+
+      <!-- Coluna Funcoes -->
+      <ng-container matColumnDef="funcoes">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon fontIcon="edit" [routerLink]="'/cliente/editar/' + element.id"></mat-icon>
+          <mat-icon fontIcon="delete" (click)="deletarCLiente(element.id)"></mat-icon>
+        </td>
+      </ng-container>
+ 
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+ 
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons [length]="dataSource.data.length + 1"    (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
